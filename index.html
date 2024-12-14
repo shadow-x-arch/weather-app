@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        bounce: 'bounce 2s infinite',
+                        fadeIn: 'fadeIn 1s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@heroicons/react/outline" defer></script>
+    <style>
+        body.dark {
+            background: linear-gradient(to right, #1e3a8a, #4c1d95);
+        }
+        .dark .bg-white {
+            background-color: #1f2937;
+            color: #f9fafb;
+        }
+        .dark input {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #f9fafb;
+        }
+        .dark button {
+            background-color: #4b5563;
+            color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-purple-600 flex justify-center items-center min-h-screen">
+    <div class="p-8 max-w-md mx-auto bg-white rounded-2xl shadow-2xl">
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-6">Weather App</h1>
+        <div class="space-y-6">
+            <div class="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-3">
+                <input 
+                    type="text" 
+                    id="city" 
+                    placeholder="Enter city name" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none"
+                >
+                <button 
+                    onclick="getWeather()" 
+                    class="w-full md:w-auto px-5 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 animate-bounce"
+                >
+                    Get Weather
+                </button>
+            </div>
+            <div class="text-center space-y-4 animate-fadeIn">
+                <h2 id="location" class="text-2xl font-semibold text-gray-700"></h2>
+                <p id="temperature" class="text-xl text-green-500"></p>
+                <p id="description" class="text-gray-600"></p>
+                <p id="humidity" class="text-gray-600"></p>
+                <p id="wind" class="text-gray-600"></p>
+                <div id="icon" class="weather-icon mx-auto"></div>
+            </div>
+        </div>
+        <div class="mt-6 text-center">
+            <button 
+                class="px-4 py-2 bg-gray-800 text-white font-bold rounded-md hover:bg-gray-900 focus:ring-2 focus:ring-purple-300" 
+                onclick="toggleDarkMode()"
+            >
+                Toggle Dark Mode
+            </button>
+        </div>
+    </div>
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark');
+            const darkModeEnabled = body.classList.contains('dark');
+            localStorage.setItem('darkMode', darkModeEnabled);
+        }
+
+        // Apply the saved dark mode preference on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+    <script src="weather-app.js"></script>
+</body>
+</html>
